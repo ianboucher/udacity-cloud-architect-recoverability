@@ -1,0 +1,34 @@
+1. RTO for single AZ outage
+
+AWS documentation states: "The time it takes for the failover to complete depends on the database activity and other conditions at the time the primary DB instance became unavailable. Failover times are typically 60–120 seconds"
+
+Assuming above failover time starts as soon as AZ becomes unavailable, estimated min RTO is 120sec and should be automatically detected & managed by RDS.
+
+2. RTO for single regional outage
+
+Steps to remediate:
+
+- Launch/start EC2 instance in the standby region & configure to use the VPC's public subnet and security group ~5min
+- SSH to the instance and connect to the read replica database ~2min
+- Promote the read replica ~5min
+- Verify newly promoted database is working correctly. 2min (Time to recover DB ~15min)
+- Deploy application to EC2 Instance ~10min
+- Verify application can connect to database ~2min
+- Checks to ensure application is working correctly ~5min
+- Bring application out of maintenance mode and route traffic to web server ~2min
+
+Estimated min RTO for single-region outage: ~35min
+
+
+3. RPO for single AZ outage:
+ 
+Assuming web-server continued to serve requests for 60-120sec until database failover completed
+
+Estimated min RPO for single AZ outage: 2min 
+
+4. RPO for regional outage
+
+- Assuming primary was accepting writes up until outage, the read replica would be up to date with the primary
+- Regional outage would prevent web-server from accepting requests therefore no data loss as application would be down and no data could be submitted? 
+
+Estimated RPO for single region outage: 0min

@@ -1,0 +1,58 @@
+[ec2-user@ip-10-1-10-11 ~]$ mysql -h udacity-arr-1.cnhgajmkh8mj.eu-west-1.rds.amazonaws.com -P 3306 -u udarr1_admin -p udacity
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 456
+Server version: 8.0.20 Source distribution
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use udacity
+Database changed
+mysql> CREATE TABLE languages(
+    -> language_id INT NOT NULL AUTO_INCREMENT,
+    -> name VARCHAR(20),
+    -> year INT,
+    -> PRIMARY KEY (language_id)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> show tables
+    -> ;
++-------------------+
+| Tables_in_udacity |
++-------------------+
+| languages         |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO languages
+    -> (language_id, name, year)
+    -> VALUES
+    -> ("1", "TypeScript", "2012");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> describe languages;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| language_id | int         | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(20) | YES  |     | NULL    |                |
+| year        | int         | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * from languages;
++-------------+------------+------+
+| language_id | name       | year |
++-------------+------------+------+
+|           1 | TypeScript | 2012 |
++-------------+------------+------+
+1 row in set (0.00 sec)
+
+mysql> 
