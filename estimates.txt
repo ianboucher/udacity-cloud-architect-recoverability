@@ -28,7 +28,10 @@ Estimated min RPO for single AZ outage: 2min
 
 4. RPO for regional outage
 
-- Assuming primary was accepting writes up until outage, the read replica would be up to date with the primary
-- Regional outage would prevent web-server from accepting requests therefore no data loss as application would be down and no data could be submitted? 
+- Assuming primary was accepting writes up until outage, the read replica would be up to date 
+  or at slightly behind the primary due to asynchronous replication lag
+- Promoting read replica is a manual process, so would need to be triggerd by alarm ~1min
+- Promotion of read replica ~3min
+- Switching over traffic to promoted Db instance ~1min
 
-Estimated RPO for single region outage: 0min
+Estimated RPO for single region outage: ~5min (Application/Db not persisting data for total of 5min)
